@@ -6,7 +6,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 app = FastAPI()
 
 # Load Data (We take a sample of 5k songs to run fast on free server)
-df = pd.read_csv('spotify_millsongdata.csv').sample(5000).reset_index(drop=True)
+df = pd.read_csv('spotify_small.csv').sample(5000).reset_index(drop=True)
 
 # Vectorization
 tfidf = TfidfVectorizer(stop_words='english')
@@ -35,4 +35,5 @@ def recommend(song: str):
     for i in sorted_scores[1:6]:
         recs.append(df.iloc[i[0]]['song'])
         
+
     return {"input_song": song, "recommendations": recs}
